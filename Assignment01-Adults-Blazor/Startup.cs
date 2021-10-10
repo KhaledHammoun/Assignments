@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Assignment01_Adults_Blazor.Data;
+using Assignment01_Adults_Blazor.Persistence.AdultPersistance;
+using Assignment01_Adults_Blazor.Persistence.AdultPersistence;
+using Assignment01_Adults_Blazor.Persistence.UserPersistence;
 
 namespace Assignment01_Adults_Blazor
 {
@@ -29,6 +32,8 @@ namespace Assignment01_Adults_Blazor
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<IAdultPersistence, AdultPersistence>();
+            services.AddSingleton<IUserPersistence, UserPersistence>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
