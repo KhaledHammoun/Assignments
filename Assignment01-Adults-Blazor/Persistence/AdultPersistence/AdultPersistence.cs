@@ -45,5 +45,18 @@ namespace Assignment01_Adults_Blazor.Persistence.AdultPersistence
             fileContext.Adults.Remove(adult);
             fileContext.SaveChanges();
         }
+
+        public Adult GetAdultById(int id)
+        {
+            Adult adultToReturn = fileContext.Adults.FirstOrDefault(a => a.Id.Equals(id));
+            if (adultToReturn == null) throw new Exception("Adult does not exist!");
+            return adultToReturn;
+        }
+
+        public void EditAdult(Adult adult)
+        {
+            fileContext.Adults[fileContext.Adults.ToList().FindIndex(index => index.Id.Equals(adult.Id))] = adult;
+            fileContext.SaveChanges();
+        }
     }
 }
