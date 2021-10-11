@@ -89,6 +89,23 @@ using Assignment01_Adults_Blazor.Shared;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 29 "C:\C#\3. Semester Three\Assignments\Assignment01-Adults-Blazor\Shared\MainLayout.razor"
+ 
+    private void Login()
+    {
+        NavigationManager.NavigateTo("/Login");
+    }
+
+    private void SignUp()
+    {
+        NavigationManager.NavigateTo("/SignUp");
+    }
+
+#line default
+#line hidden
+#nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private NavigationManager NavigationManager { get; set; }
     }
 }
 #pragma warning restore 1591

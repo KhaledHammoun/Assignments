@@ -90,7 +90,7 @@ using Assignment01_Adults_Blazor.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "C:\C#\3. Semester Three\Assignments\Assignment01-Adults-Blazor\Shared\NavMenu.razor"
+#line 40 "C:\C#\3. Semester Three\Assignments\Assignment01-Adults-Blazor\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 
