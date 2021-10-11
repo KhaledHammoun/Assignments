@@ -17,7 +17,7 @@
     <link href="Assignment01-Adults-Blazor.styles.css" rel="stylesheet"/>
 </head>
 <body>
-<component type="typeof(App)" render-mode="ServerPrerendered"/>
+<component type="typeof(App)" render-mode="Server"/>
 
 <div id="blazor-error-ui">
     <environment include="Staging,Production">
@@ -31,5 +31,8 @@
 </div>
 
 <script src="_framework/blazor.server.js"></script>
+<script src="_content/Plotly.Blazor/plotly-interop.js" type="text/javascript"></script>
+<script src="_content/Plotly.Blazor/plotly-latest.min.js" type="text/javascript"></script>
+<script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
 </body>
 </html>
