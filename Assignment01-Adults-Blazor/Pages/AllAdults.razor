@@ -1,0 +1,117 @@
+﻿@page "/AllAdults"
+@using Assignment01_Adults_Blazor.Models
+@using Assignment01_Adults_Blazor.Persistence.AdultPersistance
+
+@inject IAdultPersistence AdultPersistence
+@inject NavigationManager NavigationManager
+
+<h3>Adults</h3>
+
+<div class="form-group">
+    <input type="text" placeholder="Filter by name" @oninput="FilterByName">
+</div>
+<div class="form-group">
+    <input type="text" placeholder="Filter by job title" @oninput="FilterByJob">
+</div>
+
+@if (adultsToShow == null)
+{
+    <p class="badge-info"> Loading data...</p>
+}
+else if (!adultsToShow.Any())
+{
+    <p class="badge-info"> No data to show. Please add some data!</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <th>Adult ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Hair Color</th>
+        <th>Eye Color</th>
+        <th>Age</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>Sex</th>
+        <th>Job Title</th>
+        <th>Salary</th>
+        <th>Remove</th>
+        <th>Edit</th>
+        </thead>
+        <tbody>
+        @foreach (var adult in adultsToShow)
+        {
+            <tr>
+                <td>@adult.Id</td>
+                <td>@adult.FirstName</td>
+                <td>@adult.LastName</td>
+                <td>@adult.HairColor</td>
+                <td>@adult.EyeColor</td>
+                <td>@adult.Age</td>
+                <td>@adult.Weight</td>
+                <td>@adult.Height</td>
+                <td>@adult.Sex</td>
+                <td>@adult.JobTitle.JobTitle</td>
+                <td>@adult.JobTitle.Salary</td>
+                <AuthorizeView Policy="Level2">
+                    <td>
+                        <button class="oi oi-pencil" style="color: green;" @onclick="() => EditAdult(adult)"></button>
+                    </td>
+                </AuthorizeView>
+                <AuthorizeView Policy="Level3">
+                    <td>
+                        <button class="oi oi-trash" style="color: red" @onclick="() => RemoveAdult(adult)"></button>
+                    </td>
+                </AuthorizeView>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Adult> allAdults;
+    private List<Adult> adultsToShow;
+    private string? filterByName;
+    private string? filterByJob;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allAdults = AdultPersistence.GetAllAdults();
+        adultsToShow = allAdults;
+    }
+
+    private void FilterByName(ChangeEventArgs changeEventArgs)
+    {
+        filterByName = changeEventArgs.Value.ToString();
+        Filter();
+    }
+
+    private void FilterByJob(ChangeEventArgs changeEventArgs)
+    {
+        filterByJob = changeEventArgs.Value.ToString();
+        Filter();
+    }
+
+    private void Filter()
+    {
+        adultsToShow = allAdults.Where(a => (filterByName == null
+                                             || a.FirstName.ToLower().Contains(filterByName))
+                                            && (filterByJob == null
+                                                || a.JobTitle.JobTitle.ToLower().Contains(filterByJob))).ToList();
+    }
+
+    private void EditAdult(Adult adult)
+    {
+        NavigationManager.NavigateTo($"/Edit/{adult.Id}");
+    }
+
+    private void RemoveAdult(Adult adult)
+    {
+        AdultPersistence.RemoveAdult(adult.Id);
+    }
+
+}
