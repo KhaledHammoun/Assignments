@@ -1,0 +1,86 @@
+﻿@page "/SignUp"
+@using Assignment01_Adults_Blazor.Models
+@using Assignment01_Adults_Blazor.Persistence.UserPersistence
+@inject IUserPersistence UserPersistence
+@inject NavigationManager NavigationManager
+
+<h3>Sign Up</h3>
+
+<EditForm Model="@newUser" OnValidSubmit="@CreateNewUser">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        First Name: <br/>
+        <InputText @bind-Value="newUser.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last Name: <br/>
+        <InputText rows="1" @bind-Value="newUser.LastName "/>
+    </div>
+    <div class="form-group">
+        Hair Color: <br/>
+        <InputText rows="1" @bind-Value="newUser.HairColor"/>
+    </div>
+    <div class="form-group">
+        Eye Color: <br/>
+        <InputText rows="1" @bind-Value="newUser.EyeColor"/>
+    </div>
+    <div class="form-group">
+        Age: <br/>
+        <InputNumber @bind-Value="newUser.Age"/>
+    </div>
+    <div class="form-group">
+        Weight: <br/>
+        <InputNumber @bind-Value="newUser.Weight"/>
+    </div>
+    <div class="form-group">
+        Height: <br/>
+        <InputNumber @bind-Value="newUser.Height"/>
+    </div>
+    <div class="form-group">
+        Sex: <br/>
+        <InputText @bind-Value="newUser.Sex"/>
+    </div>
+    <div class="form-group">
+        Job Title: <br/>
+        <InputText @bind-Value="job.JobTitle"/>
+    </div>
+    <div class="form-group">
+        Salary: <br/>
+        <InputNumber @bind-Value="job.Salary"/>
+    </div>
+    <div class="form-group">
+        Username: <br/>
+        <InputText @bind-Value="newUser.Username"/>
+    </div>
+    <div class="form-group">
+        Password: <br/>
+        <InputText @bind-Value="newUser.Password"/>
+    </div>
+    <div class="form-group">
+        Security Level: <br/>
+        <InputText @bind-Value="newUser.SecurityLevel"/>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Sign Up</button>
+</EditForm>
+
+@code {
+    private User newUser = new User();
+    private Job job = new Job();
+
+    private void CreateNewUser()
+    {
+        newUser.JobTitle = job;
+        try
+        {
+            UserPersistence.CreateUser(newUser);
+            NavigationManager.NavigateTo("/Login");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+}
