@@ -82,7 +82,7 @@ namespace Assignment01_Adults_Blazor.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                throw new Exception(e.Message);
             }
             
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(identity))));
