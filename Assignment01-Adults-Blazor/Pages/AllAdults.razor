@@ -99,9 +99,9 @@ else
     private void Filter()
     {
         adultsToShow = allAdults.Where(a => (filterByName == null
-                                             || a.FirstName.ToLower().Contains(filterByName))
+                                             || a.FirstName.ToLower().Contains(filterByName.ToLower()))
                                             && (filterByJob == null
-                                                || a.JobTitle.JobTitle.ToLower().Contains(filterByJob))).ToList();
+                                                || a.JobTitle.JobTitle.ToLower().Contains(filterByJob.ToLower()))).ToList();
     }
 
     private void EditAdult(Adult adult)
