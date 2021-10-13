@@ -1,6 +1,11 @@
 ﻿# Default ignored files
 /shelf/
 /workspace.xml
+/*.json
+/*.csproj
+/*.cache
+/*.xml
+/*.g.cs
 # Rider ignored files
 /.idea.Assignments.iml
 /modules.xml

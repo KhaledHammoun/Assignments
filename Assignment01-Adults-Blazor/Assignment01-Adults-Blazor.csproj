@@ -5,4 +5,12 @@
         <RootNamespace>Assignment01_Adults_Blazor</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Content Remove="users.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data" />
+    </ItemGroup>
+
 </Project>

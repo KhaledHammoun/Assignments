@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Username": "khaled",
+    "Password": "12345",
+    "SecurityLevel": "3",
+    "JobTitle": {
+      "JobTitle": "Student",
+      "Salary": 10000
+    },
+    "Id": 0,
+    "FirstName": "Khaled",
+    "LastName": "Hammoun",
+    "HairColor": "Brown",
+    "EyeColor": "Blue",
+    "Age": 26,
+    "Weight": 70,
+    "Height": 180,
+    "Sex": "Male"
+  },
+  {
+    "Username": "eliza",
+    "Password": "123456",
+    "SecurityLevel": "1",
+    "JobTitle": {
+      "JobTitle": "Student",
+      "Salary": 10000
+    },
+    "Id": 0,
+    "FirstName": "eliza",
+    "LastName": "manciu",
+    "HairColor": "Brown",
+    "EyeColor": "Green",
+    "Age": 34,
+    "Weight": 50,
+    "Height": 166,
+    "Sex": "Female"
+  }
+]

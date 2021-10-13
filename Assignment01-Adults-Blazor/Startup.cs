@@ -1,23 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Assignment01_Adults_Blazor.Authentication;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Assignment01_Adults_Blazor.Data;
 using Assignment01_Adults_Blazor.Persistence;
 using Assignment01_Adults_Blazor.Persistence.AdultPersistance;
 using Assignment01_Adults_Blazor.Persistence.AdultPersistence;
 using Assignment01_Adults_Blazor.Persistence.UserPersistence;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Assignment01_Adults_Blazor
 {
@@ -43,7 +35,6 @@ namespace Assignment01_Adults_Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<FileContext>();
             services.AddSingleton<IAdultPersistence, AdultPersistence>();
             services.AddSingleton<IUserPersistence, UserPersistence>();
