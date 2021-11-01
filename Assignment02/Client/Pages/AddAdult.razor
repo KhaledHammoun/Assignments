@@ -1,0 +1,122 @@
+﻿@page "/AddAdult"
+@page "/Edit/{Id:int}"
+@attribute [Authorize(Policy = "Level2")]
+
+@inject IAdultService AdultService
+@using Microsoft.AspNetCore.Components
+@using Model
+@using Client.Data.AdultService
+
+@inject NavigationManager NavigationManager
+
+<h3>@button Adult</h3>
+
+@if (adultToManipulate == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="@adultToManipulate" OnValidSubmit="@PerformOperation">
+
+        <div class="form-group">
+            First Name: <br/>
+            <InputText rows="1" @bind-Value="adultToManipulate.FirstName"/>
+        </div>
+
+        <div class="form-group">
+            Last Name: <br/>
+            <InputText rows="1" @bind-Value="adultToManipulate.LastName "/>
+        </div>
+
+        <div class="form-group">
+            Hair Color: <br/>
+            <InputText rows="1" @bind-Value="adultToManipulate.HairColor"/>
+        </div>
+
+        <div class="form-group">
+            Eye Color: <br/>
+            <InputText rows="1" @bind-Value="adultToManipulate.EyeColor"/>
+        </div>
+
+        <div class="form-group">
+            Age: <br/>
+            <InputNumber @bind-Value="adultToManipulate.Age"/>
+        </div>
+
+        <div class="form-group">
+            Weight: <br/>
+            <InputNumber @bind-Value="adultToManipulate.Weight"/>
+        </div>
+
+        <div class="form-group">
+            Height: <br/>
+            <InputNumber @bind-Value="adultToManipulate.Height"/>
+        </div>
+
+        <div class="form-group">
+            Sex: <br/>
+            <InputText @bind-Value="adultToManipulate.Sex"/>
+        </div>
+
+        <div class="form-group">
+            Job Title: <br/>
+            <InputText @bind-Value="adultToManipulate.JobTitle.JobTitle"/>
+        </div>
+        <AuthorizeView Policy="Level4" Context="different">
+            <div class="form-group">
+                Salary: <br/>
+                <InputNumber @bind-Value="adultToManipulate.JobTitle.Salary"/>
+            </div>
+        </AuthorizeView>
+
+
+        <p class="actions">
+            <button class="btn btn-outline-primary" type="submit">@button</button>
+        </p>
+    </EditForm>
+}
+
+@code {
+    private string button;
+    private Adult adultToManipulate;
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id == null)
+        {
+            adultToManipulate = new Adult();
+            button = "Add";
+        }
+        else
+        {
+            try
+            {
+                adultToManipulate = await AdultService.GetAdultByIdAsync(Id.Value);
+                button = "Edit";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+    }
+
+    private void PerformOperation()
+    {
+        if (button == "Add")
+        {
+            AdultService.AddAdultAsync(adultToManipulate);
+        }
+        else
+        {
+            AdultService.EditAdultAsync(adultToManipulate);
+        }
+        NavigationManager.NavigateTo("/AllAdults");
+    }
+
+}

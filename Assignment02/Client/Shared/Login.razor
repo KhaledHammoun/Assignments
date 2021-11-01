@@ -1,0 +1,51 @@
+﻿@page "/Login"
+@using Client.Authentication
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="form-group">
+            <input type="text" placeholder="Username" @bind-value="username"/>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Password" @bind-value="password"/>
+        </div>
+        <span style="color: red">@errorLabel</span>
+        <button class="btn btn-primary" @onclick="PerformLogin">Login</button>
+    </NotAuthorized>
+    <Authorized>
+        <button class="btn btn-primary" @onclick="PerformLogout">Logout</button>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string username;
+    private string password;
+    private string errorLabel;
+
+    private async Task PerformLogin()
+    {
+        errorLabel = "";
+        try
+        {
+            await ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).ValidateUser(username, password);
+            username = "";
+            password = "";
+            NavigationManager.NavigateTo("/AllAdults");
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+        }
+    }
+
+    private void PerformLogout()
+    {
+        ((CurrentAuthenticationStateProvider) AuthenticationStateProvider).Logout();
+        username = "";
+        password = "";
+        NavigationManager.NavigateTo("/");
+    }
+}

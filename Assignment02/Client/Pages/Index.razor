@@ -1,0 +1,13 @@
+@page "/"
+
+<h1>Hello, Adults!</h1>
+
+Welcome to my new App.
+
+<br/>    
+<br/>    
+<AuthorizeView Policy="Level1">
+    <p>
+        Welcome @context.User.Identity.Name!
+    </p>
+</AuthorizeView>

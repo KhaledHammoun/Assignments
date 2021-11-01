@@ -1,0 +1,126 @@
+﻿@page "/AllAdults"
+
+@using Model
+@using Client.Data.AdultService
+
+@inject IAdultService AdultService
+@inject NavigationManager NavigationManager
+
+<h3>Adults</h3>
+
+<div class="form-group">
+    <input type="text" placeholder="Filter by name" @oninput="FilterByName">
+</div>
+<div class="form-group">
+    <input type="text" placeholder="Filter by job title" @oninput="FilterByJob">
+</div>
+
+@if (adultsToShow == null)
+{
+    <p class="badge-info"> Loading data...</p>
+}
+else if (!adultsToShow.Any())
+{
+    <p class="badge-info"> No data to show. Please add some data!</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <th>Adult ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Hair Color</th>
+        <th>Eye Color</th>
+        <th>Age</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>Sex</th>
+        <th>Job Title</th>
+        <AuthorizeView Policy="Level4">
+            <th>Salary</th>
+        </AuthorizeView>
+        <AuthorizeView Policy="Level2">
+            <th>Edit</th>
+        </AuthorizeView>
+        <AuthorizeView Policy="Level3">
+            <th>Remove</th>
+        </AuthorizeView>
+        </thead>
+        <tbody>
+        @foreach (var adult in adultsToShow)
+        {
+            <tr>
+                <td>@adult.Id</td>
+                <td>@adult.FirstName</td>
+                <td>@adult.LastName</td>
+                <td>@adult.HairColor</td>
+                <td>@adult.EyeColor</td>
+                <td>@adult.Age</td>
+                <td>@adult.Weight</td>
+                <td>@adult.Height</td>
+                <td>@adult.Sex</td>
+                <td>@adult.JobTitle.JobTitle</td>
+                <AuthorizeView Policy="Level4">
+                    <td>@adult.JobTitle.Salary</td>
+                </AuthorizeView>
+                <AuthorizeView Policy="Level2">
+                    <td>
+                        <button class="oi oi-pencil" style="color: green;" @onclick="() => EditAdult(adult)"></button>
+                    </td>
+                </AuthorizeView>
+                <AuthorizeView Policy="Level3">
+                    <td>
+                        <button class="oi oi-trash" style="color: red" @onclick="() => RemoveAdult(adult)"></button>
+                    </td>
+                </AuthorizeView>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private IList<Adult> allAdults;
+    private IList<Adult> adultsToShow;
+    private string? filterByName;
+    private string? filterByJob;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allAdults = await AdultService.GetAllAdultsAsync();
+        adultsToShow = allAdults;
+    }
+
+    private void FilterByName(ChangeEventArgs changeEventArgs)
+    {
+        filterByName = changeEventArgs.Value.ToString();
+        Filter();
+    }
+
+    private void FilterByJob(ChangeEventArgs changeEventArgs)
+    {
+        filterByJob = changeEventArgs.Value.ToString();
+        Filter();
+    }
+
+    private void Filter()
+    {
+        adultsToShow = allAdults.Where(a => (filterByName == null
+                                             || a.FirstName.ToLower().Contains(filterByName.ToLower()))
+                                            && (filterByJob == null
+                                                || a.JobTitle.JobTitle.ToLower().Contains(filterByJob.ToLower()))).ToList();
+    }
+
+    private void EditAdult(Adult adult)
+    {
+        NavigationManager.NavigateTo($"/Edit/{adult.Id}");
+    }
+
+    private void RemoveAdult(Adult adult)
+    {
+        AdultService.DeleteAdultAsync(adult.Id);
+    }
+
+}
