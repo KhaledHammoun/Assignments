@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Model {
-public class Person {
+public abstract class Person {
     
     public int Id { get; set; }
     public string FirstName { get; set; }
@@ -13,11 +13,12 @@ public class Person {
     public int Height { get; set; }
     public string Sex { get; set; }
 
-    public Person()
+    protected Person()
     {
         
     }
-    public Person(int id, string firstName, string lastName, string hairColor, string eyeColor, int age, float weight, int height, string sex)
+
+    protected Person(int id, string firstName, string lastName, string hairColor, string eyeColor, int age, float weight, int height, string sex)
     {
         Id = id;
         FirstName = firstName;

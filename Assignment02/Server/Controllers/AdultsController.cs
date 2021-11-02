@@ -21,7 +21,7 @@ namespace Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<Adult>>> GetAllAdults([FromQuery] string firstName, [FromQuery] string jobTitle)
+        public async Task<ActionResult<IList<Adult>>> GetAllAdultsAsync([FromQuery] string firstName, [FromQuery] string jobTitle)
         {
             var adultsToReturn = new List<Adult>();
             try
@@ -41,7 +41,7 @@ namespace Server.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<Adult>> GetAdultById(int id)
+        public async Task<ActionResult<Adult>> GetAdultByIdAsync(int id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Server.Controllers
         }
         
         [HttpPost]
-        public async Task<ActionResult<Adult>> AddAdult([FromBody] Adult adult)
+        public async Task<ActionResult<Adult>> AddAdultAsync([FromBody] Adult adult)
         {
             try
             {
@@ -70,12 +70,12 @@ namespace Server.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
-        public async Task<ActionResult> DeleteAdult([FromRoute] int id)
+        public async Task<ActionResult> DeleteAdultAsync([FromRoute] int id)
         {
             try
             {
                 await adultPersistence.RemoveAdultAsync(id);
-                Console.WriteLine(GetAllAdults(null, null));
+                Console.WriteLine(GetAllAdultsAsync(null, null));
                 return Ok();
             }
             catch (Exception e)
@@ -87,7 +87,7 @@ namespace Server.Controllers
         
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<ActionResult<Adult>> EditAdult([FromBody] Adult adult)
+        public async Task<ActionResult<Adult>> EditAdultAsync([FromBody] Adult adult)
         {
             try
             {

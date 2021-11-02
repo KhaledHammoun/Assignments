@@ -2,11 +2,11 @@
 @page "/Edit/{Id:int}"
 @attribute [Authorize(Policy = "Level2")]
 
-@inject IAdultService AdultService
 @using Microsoft.AspNetCore.Components
 @using Model
 @using Client.Data.AdultService
 
+@inject IAdultService AdultService
 @inject NavigationManager NavigationManager
 
 <h3>@button Adult</h3>
