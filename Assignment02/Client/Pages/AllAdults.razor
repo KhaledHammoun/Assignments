@@ -118,9 +118,10 @@ else
         NavigationManager.NavigateTo($"/Edit/{adult.Id}");
     }
 
-    private void RemoveAdult(Adult adult)
+    private async Task RemoveAdult(Adult adult)
     {
-        AdultService.DeleteAdultAsync(adult.Id);
+        await AdultService.DeleteAdultAsync(adult.Id);
+        await OnInitializedAsync();
     }
 
 }

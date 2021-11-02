@@ -106,15 +106,15 @@ else
         }
     }
 
-    private void PerformOperation()
+    private async Task PerformOperation()
     {
         if (button == "Add")
         {
-            AdultService.AddAdultAsync(adultToManipulate);
+            await AdultService.AddAdultAsync(adultToManipulate);
         }
         else
         {
-            AdultService.EditAdultAsync(adultToManipulate);
+            await AdultService.EditAdultAsync(adultToManipulate);
         }
         NavigationManager.NavigateTo("/AllAdults");
     }

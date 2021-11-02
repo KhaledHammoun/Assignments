@@ -70,11 +70,11 @@
     private User newUser = new User();
     private string errorLabel = "";
     
-    private void CreateNewUser()
+    private async Task CreateNewUser()
     {
         try
         {
-            UserService.CreateUserAsync(newUser);
+            await UserService.CreateUserAsync(newUser);
             NavigationManager.NavigateTo("/Login");
         }
         catch (Exception e)

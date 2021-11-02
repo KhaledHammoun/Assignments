@@ -34,7 +34,7 @@ namespace Client.Authentication
                 if (!string.IsNullOrEmpty(userAsJson))
                 {
                     User user = JsonSerializer.Deserialize<User>(userAsJson);
-                    ValidateUser(user.Username, user.Password);
+                    await ValidateUser(user.Username, user.Password);
                 }
             }
             else
