@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment01-Adults-Blazor", "Assignment01-Adults-Blazor\Assignment01-Adults-Blazor.csproj", "{F0AE6F30-75E0-4D6A-B9BE-115EE6702ABA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assignment02", "Assignment02", "{F26FAE37-7988-49A8-9484-26F2F661F6BF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assignment02-03", "Assignment02-03", "{F26FAE37-7988-49A8-9484-26F2F661F6BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Assignment02\Server\Server.csproj", "{D86E5972-9248-425E-A4C4-64CE4CFFA947}"
 EndProject

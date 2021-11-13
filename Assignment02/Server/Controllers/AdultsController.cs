@@ -75,7 +75,6 @@ namespace Server.Controllers
             try
             {
                 await adultPersistence.RemoveAdultAsync(id);
-                Console.WriteLine(GetAllAdultsAsync(null, null));
                 return Ok();
             }
             catch (Exception e)

@@ -12,5 +12,10 @@ namespace Model
         {
             JobTitle = jobTitle;
         }
+
+        public override string ToString()
+        {
+            return JobTitle.JobTitle + " " + JobTitle.Salary;
+        }
     }
 }

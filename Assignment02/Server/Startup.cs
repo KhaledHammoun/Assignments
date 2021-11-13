@@ -25,6 +25,7 @@ namespace Server
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Server", Version = "v1"}); });
             services.AddSingleton<FileContext>();
+            services.AddSingleton<FamilyContext>();
             services.AddSingleton<IAdultPersistence, AdultPersistence>();
             services.AddSingleton<IUserPersistence, UserPersistence>();
         }

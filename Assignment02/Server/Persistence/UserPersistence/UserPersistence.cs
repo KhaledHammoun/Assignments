@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Model;
 
 namespace Server.Persistence.UserPersistence
 {
     public class UserPersistence : IUserPersistence
     {
-        private FileContext fileContext;
-
-        public UserPersistence(FileContext fileContext)
-        {
-            this.fileContext = fileContext;
-        }
+        //private FileContext fileContext;
 
         public async Task<User> CreateUserAsync(User user)
         {
@@ -22,10 +18,11 @@ namespace Server.Persistence.UserPersistence
 
             try
             {
-                User exists = fileContext.Users.FirstOrDefault(u => u.Username.Equals(user.Username));
+                await using FamilyContext familyContext = new FamilyContext();
+                User exists = await familyContext.Users.FirstOrDefaultAsync(u => u.Username.Equals(user.Username));
                 if (exists != null) throw new AggregateException("Username already exists");
-                fileContext.Users.Add(user);
-                fileContext.SaveChanges();
+                await familyContext.Users.AddAsync(user);
+                await familyContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -40,7 +37,8 @@ namespace Server.Persistence.UserPersistence
             if (string.IsNullOrEmpty(userToValidate.Username)) throw new AggregateException("Invalid username or password");
             if (string.IsNullOrEmpty(userToValidate.Password)) throw new AggregateException("Invalid username or password");
 
-            User user = fileContext.Users.FirstOrDefault(u => u.Username.Equals(userToValidate.Username));
+            await using FamilyContext familyContext = new FamilyContext();
+            User user = await familyContext.Users.FirstOrDefaultAsync(u => u.Username.Equals(userToValidate.Username));
             if (user == null) throw new ArgumentException("Invalid user");
             if (!user.Password.Equals(userToValidate.Password)) throw new AggregateException("Invalid password!");
 
@@ -49,7 +47,8 @@ namespace Server.Persistence.UserPersistence
 
         public async Task<IList<User>> GetAllUsersAsync()
         {
-            return fileContext.Users;
+            await using FamilyContext familyContext = new FamilyContext();
+            return familyContext.Users.ToList();
         }
     }
 }

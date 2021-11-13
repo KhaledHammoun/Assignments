@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Model;
 
 namespace Server.Persistence.AdultPersistence
 {
     public class AdultPersistence : IAdultPersistence
     {
-        private FileContext fileContext;
+        //private FileContext fileContext;
 
-        public AdultPersistence(FileContext fileContext)
-        {
-            this.fileContext = fileContext;
-        }
+        // public AdultPersistence(FileContext fileContext)
+        // {
+        //     this.fileContext = fileContext;
+        // }
 
         public async Task<Adult> AddAdultAsync(Adult adult)
         {
@@ -21,12 +23,11 @@ namespace Server.Persistence.AdultPersistence
         
             try
             {
-                Adult exists = fileContext.Adults.FirstOrDefault(a => a.Equals(adult));
+                await using FamilyContext familyContext = new FamilyContext();
+                Adult exists =await familyContext.Adults.FirstOrDefaultAsync(a => a.Equals(adult));
                 if (exists != null) throw new ArgumentException("Adult already exists");
-                int newId = fileContext.Adults.Max(person => person.Id);
-                adult.Id = ++newId;
-                fileContext.Adults.Add(adult);
-                fileContext.SaveChanges();
+                await familyContext.Adults.AddAsync(adult);
+                await familyContext.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -38,27 +39,34 @@ namespace Server.Persistence.AdultPersistence
 
         public async Task<IList<Adult>> GetAllAdultsAsync()
         {
-            return fileContext.Adults.ToList();
+            await using FamilyContext familyContext = new FamilyContext();
+            var adults = familyContext.Persons.OfType<Adult>().Include(a => a.JobTitle).ToList();
+            return adults;
         }
 
         public async Task RemoveAdultAsync(int id)
         {
-            Adult adult = fileContext.Adults.FirstOrDefault(a => a.Id.Equals(id));
-            fileContext.Adults.Remove(adult);
-            fileContext.SaveChanges();
+            await using FamilyContext familyContext = new FamilyContext();
+            Adult adult = await familyContext.Adults.FirstOrDefaultAsync(a => a.Id.Equals(id));
+            familyContext.Adults.Remove(adult);
+            await familyContext.SaveChangesAsync();
         }
 
         public async Task<Adult> GetAdultByIdAsync(int id)
         {
-            Adult adultToReturn = fileContext.Adults.FirstOrDefault(a => a.Id.Equals(id));
+            await using FamilyContext familyContext = new FamilyContext();
+            Adult adultToReturn = await familyContext.Adults.FirstOrDefaultAsync(a => a.Id.Equals(id));
             if (adultToReturn == null) throw new Exception("Adult does not exist!");
             return adultToReturn;
         }
 
         public async Task<Adult> EditAdultAsync(Adult adult)
         {
-            fileContext.Adults[fileContext.Adults.ToList().FindIndex(index => index.Id.Equals(adult.Id))] = adult;
-            fileContext.SaveChanges();
+            await using FamilyContext familyContext = new FamilyContext();
+            var firstOrDefaultAsync = familyContext.Adults.FirstOrDefaultAsync(a => a.Equals(adult));
+            if (firstOrDefaultAsync == null) throw new ArgumentException("Invalid adult!");
+            familyContext.Adults.Update(adult);
+            await familyContext.SaveChangesAsync();
             return adult;
         }
     }
