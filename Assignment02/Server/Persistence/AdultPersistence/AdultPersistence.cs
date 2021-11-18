@@ -39,9 +39,8 @@ namespace Server.Persistence.AdultPersistence
 
         public async Task<IList<Adult>> GetAllAdultsAsync()
         {
-            await using FamilyContext familyContext = new FamilyContext();
-            var adults = familyContext.Persons.OfType<Adult>().Include(a => a.JobTitle).ToList();
-            return adults;
+            using FamilyContext familyContext = new FamilyContext();
+            return familyContext.Adults.Include(a => a.JobTitle).ToList();
         }
 
         public async Task RemoveAdultAsync(int id)

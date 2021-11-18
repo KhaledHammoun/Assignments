@@ -5,8 +5,6 @@ namespace Server.Persistence
 {
     public class FamilyContext : DbContext
     {
-        public DbSet<Person> Persons { set; get; }
-        public DbSet<Job> Jobs { set; get; }
         public DbSet<Adult> Adults { set; get; }
         public DbSet<User> Users { set; get; }
 
