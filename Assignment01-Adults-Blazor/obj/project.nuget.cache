@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CXVblAxuE/ZlEi6lCUJuXbvUkhQTTM5lnmpfPtCTQx1zcmSMHRw5CVg6NxMehIIOA6gt0U8tE98gwM8qAzmhhg==",
+  "dgSpecHash": "ttKh3Bva/m940SYrDo5VWQgdZ4A1SG47oY4qsU8QonxvrpkyArPjBiWeB84G4eYBdcK+5Vdhw/NAMFyhk4IOfw==",
   "success": true,
   "projectFilePath": "C:\\C#\\3. Semester Three\\Assignments\\Assignment01-Adults-Blazor\\Assignment01-Adults-Blazor.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\X1\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.12\\microsoft.netcore.app.host.win-x64.5.0.12.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -40,7 +40,7 @@ namespace Server.Persistence.AdultPersistence
         public async Task<IList<Adult>> GetAllAdultsAsync()
         {
             using FamilyContext familyContext = new FamilyContext();
-            return familyContext.Adults.Include(a => a.JobTitle).ToList();
+            return familyContext.Adults.Include(a => a.JobTitle).Where(a => a.FirstName != null).ToList();
         }
 
         public async Task RemoveAdultAsync(int id)
